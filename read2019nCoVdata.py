@@ -97,11 +97,10 @@ def evolution(listdict, tlst1, tlst2, timekeyword, valuekeyword):
 
 
 def province_evolution(province, countkeyword, listdict, tAlst, tBlst):
-    listdict = selectkeydata(listdict, 'country', '中国')
+#    listdict = selectkeydata(listdict, 'country', '中国')
     province_data = selectkeydata(listdict, 'provinceName', province)
-    print(len(listdict))
-    print(len(province_data))
-    input('xxxx')
+#    print(len(listdict))
+#    print(len(province_data))
     ######## dataset1
     count1 = []
     tlst1 = []
@@ -120,7 +119,7 @@ def nationalevolution(allprovince, countkeyword, listdict, tAlst, tBlst):
     countall = np.zeros(len(tBlst))
     for pi in allprovince:
         tlst1, count1, tlst2, count2 \
-                = province_evolution(pi, countkeyword, r['results'], t1, t2)
+                = province_evolution(pi, countkeyword, listdict, tAlst, tBlst)
         countall += np.array(count2)
     return tBlst, countall
    #^^^^^^^END
