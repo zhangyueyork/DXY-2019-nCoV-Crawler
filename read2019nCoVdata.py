@@ -117,11 +117,13 @@ def province_evolution(province, countkeyword, listdict, tAlst, tBlst):
 
 def nationalevolution(allprovince, countkeyword, listdict, tAlst, tBlst):
     countall = np.zeros(len(tBlst))
+    tendlst = []
     for pi in allprovince:
         tlst1, count1, tlst2, count2 \
                 = province_evolution(pi, countkeyword, listdict, tAlst, tBlst)
         countall += np.array(count2)
-    return tBlst, countall
+        tendlst.append(tlst1[-1])
+    return tBlst, countall, max(tendlst)
    #^^^^^^^END
 
 
