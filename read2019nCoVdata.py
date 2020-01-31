@@ -115,6 +115,43 @@ def province_evolution(province, countkeyword, listdict, tAlst, tBlst):
    #^^^^^^^END
 
 
+def city_evolution(province, provincekey, city, citykey, 
+        countkeyword, listdict, tAlst, tBlst):
+    # 先筛选省，先筛选市
+    provincedata = selectkeydata(listdict, provincekey, province)
+    ######## 将城市数据转换为省数据格式
+    citydataall = []
+    for pi in provincedata:
+        newdict = pi['cities']
+        for cityi in newdict:
+            cityi['updateTime'] = pi['updateTime']
+        citydataall += newdict
+    ########
+    citydata = selectkeydata(citydataall, citykey, city)
+    citydata2 = selectkeydata(citydataall, citykey, city+'区')
+    for ci in citydata2:
+        s1 = ci[citykey]
+#        s1 = s1.split('自治区')[0]
+#        s1 = s1.split('自治州')[0]
+#        s1 = s1.split('行政区')[0]
+#        s1 = s1.split('林区')[0]
+        s1 = s1.split('区')[0]
+        ci[citykey] = s1
+    citydata += citydata2
+    ########################
+    count1 = []
+    tlst1 = []
+    for listi in citydata:
+        count1.append(listi[countkeyword])
+        tlst1.append(listi['updateTime'])
+    ########
+    tlst2, count2 = evolution(citydata, tAlst, tBlst, 
+            'updateTime', countkeyword)
+    ########
+    return tlst1, count1, tlst2, count2
+   #^^^^^^^END
+
+
 def nationalevolution(allprovince, countkeyword, listdict, tAlst, tBlst):
     countall = np.zeros(len(tBlst))
     tendlst = []
@@ -142,6 +179,7 @@ print('t0---->', time.asctime(time.localtime(t0)))
 ########################
 if __name__ == '__main__':
     r1 = getdata(url1)
+    input('xxx')
     r2 = getdata(url2)
     printdict(r1['results'][0])
     allprovince = r2['results']
